@@ -30,6 +30,8 @@ catch_discover_tests("UnitTestBar")
 
 if(ENABLE_COVERAGE)
     set(COVERAGE_MAIN "coverage")
+    set(GCOVR_ADDITIONAL_ARGS "--gcov-ignore-errors=source_not_found"
+        "--gcov-ignore-errors=no_working_dir_found")
     set(COVERAGE_EXCLUDES
         "${PROJECT_SOURCE_DIR}/app/*"
         "${PROJECT_SOURCE_DIR}/cmake/*"

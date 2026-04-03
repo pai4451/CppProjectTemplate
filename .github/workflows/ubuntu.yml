@@ -10,21 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: install
-      run: |
-        pip install --user -U gcovr
+      run: pip install --user -U gcovr
     - name: prepare
-      run: |
-        make prepare
+      run: make prepare
     - name: configure
-      run: |
-        cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
-    - name: building and testing
-      run: |
-        cmake --build build --config Debug --target coverage -j4
-        cd build
-        ctest .
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
+    - name: build
+      run: cmake --build build --config Debug --target coverage -j4
+    - name: test
+      run: ctest --test-dir build --output-on-failure
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:

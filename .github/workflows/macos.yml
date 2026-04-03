@@ -10,15 +10,12 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: prepare
-      run: |
-        make prepare
+      run: make prepare
     - name: configure
-      run: |
-        cmake -H. -Bbuild -DCMAKE_BUILD_TYPE="Debug"
-    - name: building and testing
-      run: |
-        cmake --build build --config Debug
-        cd build
-        ctest .
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+    - name: build
+      run: cmake --build build --config Debug
+    - name: test
+      run: ctest --test-dir build --output-on-failure

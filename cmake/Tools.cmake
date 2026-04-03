@@ -117,8 +117,7 @@ function(add_clang_tidy_to_target target)
                     -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
                     -extra-arg-before=-std=${CMAKE_CXX_STANDARD}
                     -header-filter="\(src|app\)\/*.\(h|hpp\)"
-                    -p=${CMAKE_BINARY_DIR}
-                    ${CLANG_TIDY_EXTRA_ARGS}
+                    -p=${CMAKE_BINARY_DIR} ${CLANG_TIDY_EXTRA_ARGS}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 USES_TERMINAL)
         endif()

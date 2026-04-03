@@ -76,11 +76,14 @@ if(USE_CPM)
     cpmaddpackage("gh:nlohmann/json#v3.11.3")
     cpmaddpackage("gh:fmtlib/fmt#11.1.4")
     cpmaddpackage(
-        NAME spdlog
-        GITHUB_REPOSITORY gabime/spdlog
-        GIT_TAG v1.15.2
-        OPTIONS "SPDLOG_FMT_EXTERNAL ON"
-    )
+        NAME
+        spdlog
+        GITHUB_REPOSITORY
+        gabime/spdlog
+        GIT_TAG
+        v1.15.2
+        OPTIONS
+        "SPDLOG_FMT_EXTERNAL ON")
     cpmaddpackage("gh:jarro2783/cxxopts#v3.1.1")
     if(ENABLE_TESTING)
         cpmaddpackage("gh:catchorg/Catch2#v3.5.3")

@@ -6,23 +6,23 @@
             "type": "shell",
             "command": [
                 // MSVC
-                "${workspaceFolder}/build/app/Debug/main"
+                // "${workspaceFolder}/build/app/Debug/main"
                 // Unix
                 // "${workspaceFolder}/build/bin/main"
+                // MacOS
+                "${workspaceFolder}/build/app/main"
             ],
             "args": [
-                // "--verbose",
-                // "true",
-                // "--filename",
-                // "${workspaceFolder}/app/test.json"
+                "--verbose",
+                "true",
+                "--filename",
+                "${workspaceFolder}/app/test.json"
             ],
             "group": {
-                "kind": "build",
+                "kind": "test",
                 "isDefault": true
             },
-            "problemMatcher": [
-                "$gcc"
-            ]
+            "problemMatcher": []
         }
     ]
 }

@@ -1,33 +1,32 @@
 # Template For C++ Projects
 
-![C++](https://img.shields.io/badge/C%2B%2B-11%2F14%2F17%2F20%2F23-blue)
-![License](https://img.shields.io/github/license/franneck94/CppProjectTemplate)
-![Linux Build](https://github.com/franneck94/CppProjectTemplate/workflows/Ubuntu%20CI%20Test/badge.svg)
+![C++](https://img.shields.io/badge/C%2B%2B-20-blue)
+![License](https://img.shields.io/github/license/pai4451/CppProjectTemplate)
+![Ubuntu CI](https://github.com/pai4451/CppProjectTemplate/actions/workflows/ubuntu.yml/badge.svg)
+![macOS CI](https://github.com/pai4451/CppProjectTemplate/actions/workflows/macos.yml/badge.svg)
+![Windows CI](https://github.com/pai4451/CppProjectTemplate/actions/workflows/windows.yml/badge.svg)
+![Docs](https://github.com/pai4451/CppProjectTemplate/actions/workflows/documentation.yml/badge.svg)
+![CodeQL](https://github.com/pai4451/CppProjectTemplate/actions/workflows/codeql.yml/badge.svg)
 
-**This is the final project of my Udemy Course**.
-See here to get the full discount to all of my Udemy Courses: [Link](https://github.com/franneck94/YoutubeVideos/blob/main/EnglishCourses.md)
+A template for modern C++ projects with CMake, testing, CI/CD, and tooling pre-configured.
 
-This is a template for modern C++ projects.
-What you get is:
+## Features
 
 - Library, executable and test code separated in distinct folders
-- Use of modern CMake for building and compiling
-- External libraries installed and managed by
-  - [CPM](https://github.com/cpm-cmake/CPM.cmake) Package Manager **OR**
-  - [Conan](https://conan.io/) Package Manager **OR**
-  - [VCPKG](https://github.com/microsoft/vcpkg) Package Manager
-- Unit testing using [Catch2](https://github.com/catchorg/Catch2) v2
+- Modern CMake for building and compiling
+- External libraries managed by [CPM](https://github.com/cpm-cmake/CPM.cmake), [Conan](https://conan.io/), or [VCPKG](https://github.com/microsoft/vcpkg)
+- Unit testing using [Catch2](https://github.com/catchorg/Catch2) v3
 - General purpose libraries: [JSON](https://github.com/nlohmann/json), [spdlog](https://github.com/gabime/spdlog), [cxxopts](https://github.com/jarro2783/cxxopts) and [fmt](https://github.com/fmtlib/fmt)
-- Continuous integration testing with Github Actions and [pre-commit](https://pre-commit.com/)
-- Code documentation with [Doxygen](https://doxygen.nl/) and [Github Pages](https://franneck94.github.io/CppProjectTemplate/)
-- Tooling: Clang-Format, Cmake-Format, Clang-tidy, Sanitizers
+- Continuous integration with GitHub Actions and [pre-commit](https://pre-commit.com/)
+- Code documentation with [Doxygen](https://doxygen.nl/) and [GitHub Pages](https://pai4451.github.io/CppProjectTemplate/)
+- Tooling: Clang-Format, CMake-Format, Clang-Tidy, Sanitizers, Code Coverage
 
 ## Structure
 
-``` text
+```text
 ├── CMakeLists.txt
 ├── app
-│   ├── CMakesLists.txt
+│   ├── CMakeLists.txt
 │   └── main.cc
 ├── cmake
 │   └── cmake modules
@@ -35,10 +34,9 @@ What you get is:
 │   ├── Doxyfile
 │   └── html/
 ├── external
-│   ├── CMakesLists.txt
-│   ├── ...
+│   └── CMakeLists.txt
 ├── src
-│   ├── CMakesLists.txt
+│   ├── CMakeLists.txt
 │   ├── foo/...
 │   └── bar/...
 └── tests
@@ -48,59 +46,50 @@ What you get is:
 
 Library code goes into [src/](src/), main program code in [app/](app) and tests go in [tests/](tests/).
 
-## Software Requirements
+## Requirements
 
-- CMake 3.21+
+- CMake 3.22+
 - GNU Makefile
-- Doxygen
-- Conan or VCPKG
-- MSVC 2017 (or higher), G++9 (or higher), Clang++9 (or higher)
-- Optional: Code Coverage (only on GNU|Clang): gcovr
-- Optional: Makefile, Doxygen, Conan, VCPKG
+- Doxygen (optional, for docs)
+- MSVC 2019+, GCC 10+, or Clang 12+
+- gcovr (optional, for code coverage)
 
 ## Building
 
-First, clone this repo and do the preliminary work:
+Clone the repo:
 
 ```shell
-git clone --recursive https://github.com/franneck94/CppProjectTemplate
-mkdir build
+git clone --recurse-submodules https://github.com/pai4451/CppProjectTemplate
 ```
 
-- App Executable
+**App Executable**
 
 ```shell
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-cmake --build . --config Release --target main
-cd app
-./main
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release --target main
+./build/app/main
 ```
 
-- Unit testing
+**Unit Testing**
 
 ```shell
-cmake -H. -Bbuild -DCMAKE_BUILD_TYPE="Debug"
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build --config Debug
-cd build
-ctest .
+ctest --test-dir build --output-on-failure
 ```
 
-- Documentation
+**Documentation**
 
 ```shell
-cd build
-cmake -DCMAKE_BUILD_TYPE=Debug ..
-cmake --build . --config Debug --target docs
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --config Debug --target docs
 ```
 
-- Code Coverage (Unix only)
+**Code Coverage (Unix only)**
 
 ```shell
-cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On
 cmake --build build --config Debug --target coverage -j4
-cd build
-ctest .
 ```
 
 For more info about CMake see [here](./README_cmake.md).

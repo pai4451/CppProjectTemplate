@@ -92,6 +92,13 @@ function(add_clang_tidy_to_target target)
 
     find_program(CLANGTIDY clang-tidy)
     if(CLANGTIDY)
+        if(APPLE)
+            execute_process(
+                COMMAND xcrun --show-sdk-path
+                OUTPUT_VARIABLE APPLE_SDK_PATH
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+            set(CLANG_TIDY_EXTRA_ARGS -extra-arg=--sysroot=${APPLE_SDK_PATH})
+        endif()
         if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
             message(STATUS "Added MSVC ClangTidy (VS GUI only) for: ${target}")
             set_target_properties(
@@ -111,6 +118,7 @@ function(add_clang_tidy_to_target target)
                     -extra-arg-before=-std=${CMAKE_CXX_STANDARD}
                     -header-filter="\(src|app\)\/*.\(h|hpp\)"
                     -p=${CMAKE_BINARY_DIR}
+                    ${CLANG_TIDY_EXTRA_ARGS}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 USES_TERMINAL)
         endif()
